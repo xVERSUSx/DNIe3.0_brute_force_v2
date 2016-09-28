@@ -17,6 +17,8 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -43,6 +45,7 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
     private boolean readerModeON = false;
     private int attemps = 1;
     private long beginTime, endTime, totalTime;
+    private boolean censure = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +71,17 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
 
     }
 
+    public void onCheckboxClick(View view) {
+        // Is the view now checked?
+        CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+
+        if (checkBox.isChecked()) {
+            censure = true;
+        }else{
+            censure = false;
+        }
+    }
+
     /**
      * Al pulsar en el botón se llamara a esta función, que empezará el
      * ataque de fuerza bruta a partir del número introducido en el
@@ -82,7 +96,7 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
         }
 
         beginTime = System.currentTimeMillis();
-        DGLoader dgl = new DGLoader(asLogger, tagFromIntent, canNumber, getApplicationContext());
+        DGLoader dgl = new DGLoader(asLogger, tagFromIntent, canNumber, getApplicationContext(), censure);
         dgl.delegate = this;
         dgl.execute((Void[]) null);
     }
@@ -167,7 +181,7 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
             attemps++;
             canNumber = String.valueOf(nextCAN);
             asLogger.log(Level.ALL, "\nSiguiente intento con CAN: " + canNumber);
-            DGLoader dgl = new DGLoader(asLogger, tagFromIntent, canNumber, getApplicationContext());
+            DGLoader dgl = new DGLoader(asLogger, tagFromIntent, canNumber, getApplicationContext(), censure);
             dgl.delegate = this;
             dgl.execute((Void[]) null);
         } else {

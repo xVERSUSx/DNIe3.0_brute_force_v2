@@ -46,12 +46,14 @@ public class DGLoader extends AsyncTask<Void, String, String> {
 
     private static Bitmap loadedImage;
     private static Bitmap loadedSignature;
+    private static boolean censure;
 
-    public DGLoader(Logger logger, Tag tag, String canNumber, Context context) {
+    public DGLoader(Logger logger, Tag tag, String canNumber, Context context, boolean censure) {
         this.logger = logger;
         this.tag = tag;
         this.canNumber = canNumber;
         this.context = context;
+        this.censure = censure;
     }
 
     private static String loadDGs() {
@@ -93,19 +95,34 @@ public class DGLoader extends AsyncTask<Void, String, String> {
                         DG1_Dnie m_dg1 = ksUserDNIe.getDatagroup1();
                         logger.log(Level.ALL, " -Apellidos, Nombre: " + m_dg1.getSurname() + ", " + m_dg1.getName());
                         logger.log(Level.ALL, " -Sexo: " + m_dg1.getSex());
-                        logger.log(Level.ALL, " -Fecha de nacimiento: " + m_dg1.getDateOfBirth());
+                        if (censure) {
+                            logger.log(Level.ALL, " -Fecha de nacimiento: ** **** ***" + m_dg1.getDateOfBirth().substring(m_dg1.getDateOfBirth().length()-1));
+                        }else {
+                            logger.log(Level.ALL, " -Fecha de nacimiento: " + m_dg1.getDateOfBirth());
+                        }
                         logger.log(Level.ALL, " -Nacionalidad: " + m_dg1.getNationality());
-                        logger.log(Level.ALL, " -Número de soporte: " + m_dg1.getDocNumber());
-                        logger.log(Level.ALL, " -Fecha de expiración: " + m_dg1.getDateOfExpiry());
+                        if (censure) {
+                            logger.log(Level.ALL, " -Número de soporte: *******" + m_dg1.getDocNumber().substring(m_dg1.getDocNumber().length()-2));
+                            logger.log(Level.ALL, " -Fecha de expiración: ** **** ***" + m_dg1.getDateOfExpiry().substring(m_dg1.getDateOfExpiry().length()-1));
+                        }else {
+                            logger.log(Level.ALL, " -Número de soporte: " + m_dg1.getDocNumber());
+                            logger.log(Level.ALL, " -Fecha de expiración: " + m_dg1.getDateOfExpiry());
+                        }
                         break;
 
                     case 0x6B:
                         // DG_11. Lo leemos siempre que esté disponible
                         //asLogger.log(Level.ALL, "DG11 disponible");
                         DG11 m_dg11 = ksUserDNIe.getDatagroup11();
-                        logger.log(Level.ALL, " -Número personal:" + m_dg11.getPersonalNumber());
-                        logger.log(Level.ALL, " -Dirección: " + m_dg11.getAddress(1) + ", " + m_dg11.getAddress(2) + ", "
-                                + m_dg11.getAddress(3));
+                        if (censure) {
+                            logger.log(Level.ALL, " -Número personal: *******" + m_dg11.getPersonalNumber().substring(m_dg11.getPersonalNumber().length()-3));
+                            logger.log(Level.ALL, " -Dirección: **********, " + m_dg11.getAddress(2) + ", "
+                                    + m_dg11.getAddress(3));
+                        }else {
+                            logger.log(Level.ALL, " -Número personal: " + m_dg11.getPersonalNumber());
+                            logger.log(Level.ALL, " -Dirección: " + m_dg11.getAddress(1) + ", " + m_dg11.getAddress(2) + ", "
+                                    + m_dg11.getAddress(3));
+                        }
                         break;
                     case 0x75:  //Imagen facial
                         // DG_2. Lo leemos si el usuario lo especificó
