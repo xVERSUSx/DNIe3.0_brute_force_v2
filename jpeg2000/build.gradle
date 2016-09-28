@@ -1,0 +1,2 @@
+configurations.create("default")
+artifacts.add("default", file('jpeg2000.jar'))

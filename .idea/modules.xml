@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/DNIe3.0_brute_force_v2.iml" filepath="$PROJECT_DIR$/DNIe3.0_brute_force_v2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dniedroid/dniedroid.iml" filepath="$PROJECT_DIR$/dniedroid/dniedroid.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jpeg2000/jpeg2000.iml" filepath="$PROJECT_DIR$/jpeg2000/jpeg2000.iml" />
+    </modules>
+  </component>
+</project>
