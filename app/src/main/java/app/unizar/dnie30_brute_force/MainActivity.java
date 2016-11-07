@@ -68,6 +68,19 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
         asLogger.addHandler(handler);
         asLogger.setLevel(Level.parse("ALL"));
 
+        //Log en fichero
+        try {
+            fh = new FileHandler("/sdcard/DNIe3_bf/DNIe3_bf.log");
+            asLogger.addHandler(fh);
+            CustomFormatterLog formatter = new CustomFormatterLog();
+            //SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        }catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -94,6 +107,8 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
         if (canNumber.equals("")) {
             canNumber = "0";
         }
+        // Activamos el modo rápido para agilizar la carga.
+        System.setProperty("es.gob.jmulticard.fastmode", "true");
 
         beginTime = System.currentTimeMillis();
         DGLoader dgl = new DGLoader(asLogger, tagFromIntent, canNumber, getApplicationContext(), censure);
