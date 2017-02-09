@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
     // NFC Adapter
     static private NfcAdapter myNfcAdapter = null;
     private static FileHandler fh;    //Guardar logs en fichero
-    private static String canNumber = "0";
+    private static String canNumber = "-1";
     private static TextView textView = null;
     private static Tag tagFromIntent = null;
     private Activity myActivity;
@@ -150,7 +150,14 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
         try {
             tagFromIntent = tag;
 
-            asLogger.log(Level.ALL, "TAG encontrado");
+            if (!canNumber.equals("-1")) {
+                asLogger.log(Level.ALL, "\nTAG rencontrado\n");
+                DGLoader dgl = new DGLoader(asLogger, tagFromIntent, canNumber, getApplicationContext(), censure);
+                dgl.delegate = this;
+                dgl.execute((Void[]) null);
+            } else {
+                asLogger.log(Level.ALL, "TAG encontrado");
+            }
 
         } catch (Exception e) {
             asLogger.log(Level.ALL, "Ocurrió un error durante la lectura de ficheros.\n" + e.getMessage());
@@ -189,7 +196,13 @@ public class MainActivity extends Activity implements NfcAdapter.ReaderCallback,
      */
     @Override
     public void processFinish(String output) {
-        if (!output.contains("correcto")) {
+        if (output == null) {
+            DGLoader dgl = new DGLoader(asLogger, tagFromIntent, canNumber, getApplicationContext(), censure);
+            dgl.delegate = this;
+            dgl.execute((Void[]) null);
+        } else if (output.equals("tagLost")) {
+            asLogger.log(Level.ALL, "Conexión con el DNIe3.0 perdida");
+        } else if (!output.contains("correcto")) {
             asLogger.log(Level.ALL, "CAN " + canNumber + " incorrecto.");
             asLogger.log(Level.ALL, "Tiempo utilizado: " + output + " segundos.");
             int nextCAN = Integer.parseInt(canNumber) + 1;
