@@ -5,8 +5,7 @@ en la nueva versión del documento de identidad español usando módulo
 ofrecido por la Policía Nacional para gestionar la conexión.
 Este programa forma parte del TFG "Análisis de la resistencia del DNIe3.0
 ante el robo de identidad mediante tecnología NFC" / "Security analysis of
-DNIe3.0 against NFC based identity theft" (disponible en 
-http://webdiis.unizar.es/~ricardo/files/PFCs-TFGs/Seguridad-DNIe-3.0-NFC/Memoria_TFG_SeguridadDNIe3.0_NFC.pdf).
+DNIe3.0 against NFC based identity theft"
 
 
 This file is part of DNIe3.0_brute_force_v2.
