@@ -7,6 +7,12 @@ Este programa forma parte del TFG "Análisis de la resistencia del DNIe3.0
 ante el robo de identidad mediante tecnología NFC" / "Security analysis of
 DNIe3.0 against NFC based identity theft"
 
+# Update
+En 2018 el DNI3.0 recibió un update, y la vulnerabilidad explotada por este PoC fué parcheada.
+Como se puede ver en la siguiente imagen, el tiempo de respuesta tras sucesivos intentos de autenticación fallido crece, haciendo el ataque inviable en terminos de tiempo.
+
+![alt text](https://github.com/xVERSUSx/DNIe3.0_brute_force_v2/blob/master/fit.jpg)
+
 
 This file is part of DNIe3.0_brute_force_v2.
 
