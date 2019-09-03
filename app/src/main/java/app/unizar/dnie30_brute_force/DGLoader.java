@@ -52,9 +52,21 @@ public class DGLoader extends AsyncTask<Void, String, String> {
     private static Bitmap loadedImage;
     private static Bitmap loadedSignature;
     private static boolean censure;
-    private static final String IMAGES_PATH = "/sdcard/DNIe3_bf/";
+    private static String IMAGES_PATH = "/sdcard/DNIe3_bf/";
 
     public DGLoader(Logger logger, Tag tag, String canNumber, Context context, boolean censure) {
+        // Crear carpeta en SDCARD para guardar datos e imagenes
+        File folder = new File(Environment.getExternalStorageDirectory() +
+                File.separator + "DNIe3_bf");
+        boolean success = true;
+        if (!folder.exists()) {
+            success = folder.mkdirs();
+        }
+        if (success) {
+            logger.log(Level.ALL, "Carpeta para guardar datos creada en SDCARD\n");
+        } else {
+            logger.log(Level.ALL, "Error al crear carpeta de datos en SDCARD");
+        }
         this.logger = logger;
         this.tag = tag;
         this.canNumber = canNumber;
